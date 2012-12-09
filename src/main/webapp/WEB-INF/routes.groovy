@@ -1,0 +1,1 @@
+get '/', forward: '/ggx/yatda/main.groovy'

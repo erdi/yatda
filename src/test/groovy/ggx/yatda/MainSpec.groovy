@@ -7,7 +7,22 @@ import groovyx.gaelyk.functional.datastore.DataBuilder
 
 class MainSpec extends ConventionalGaelykUnitSpec {
 
-	DataBuilder dataBuilder = new DataBuilder()
+	void setupTodos() {
+		new DataBuilder().setupData {
+			todo {
+				text = 'first'
+				userId = '1'
+			}
+			todo {
+				text = 'second'
+				userId = '1'
+			}
+			todo {
+				text = 'not mine'
+				userId = '2'
+			}
+		}
+	}
 
 	@Unroll
 	void 'should show #page page when user is #scenario in'() {
@@ -32,23 +47,10 @@ class MainSpec extends ConventionalGaelykUnitSpec {
 		scenario = user ? 'logged' : 'not logged'
 	}
 
-	void 'todos are retrieved from the datastore'() {
+	void 'todos retrieval'() {
 		given:
 		main.user = new User('', '', '1')
-		dataBuilder.setupData {
-			todo {
-				text = 'first'
-				userId = '1'
-			}
-			todo {
-				text = 'second'
-				userId = '1'
-			}
-			todo {
-				text = 'not mine'
-				userId = '2'
-			}
-		}
+		setupTodos()
 
 		when:
 		main.get()

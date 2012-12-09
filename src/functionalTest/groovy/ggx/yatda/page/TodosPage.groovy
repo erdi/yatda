@@ -13,5 +13,8 @@ class TodosPage extends Page {
 
 		addTodosPromo(required: false) { $('h2') }
 		todos(required: false) { index -> moduleList TodoModule, $('.todo'), index }
+
+		newTodo { $('input', name: 'text') }
+		newTodoSubmit{ newTodo.next() }
 	}
 }

@@ -11,24 +11,24 @@ import groovyx.gaelyk.functional.spock.ModifiesDatastore
 @Use([LoginCategory, DataSetupCategory])
 class TodosPageSpec extends GebSpec {
 
-	private String retrieveLoggedInUserId() {
+	private String retrieveUserId() {
 		browser.driver.manage().cookies.find { it.name == 'dev_appserver_login' }.value.split(':').last()
 	}
 
 	private void setupTodos() {
-		def currentId = retrieveLoggedInUserId()
+		def currentUserId = retrieveUserId()
 		setupData {
 			todo {
 				text = 'first'
-				userId = currentId
+				userId = currentUserId
 			}
 			todo {
 				text = 'second'
-				userId = currentId
+				userId = currentUserId
 			}
 			todo {
-				text = 'not mine!'
-				userId = currentId + 's'
+				text = 'not mine'
+				userId = currentUserId + 'a'
 			}
 		}
 	}
@@ -57,7 +57,7 @@ class TodosPageSpec extends GebSpec {
 		at LandingPage
 	}
 
-	void 'user sees no todos if they have none'() {
+	void 'users see the add todos message if they have none'() {
 		when:
 		loginTo 'user@ggx.org', false, TodosPage
 
@@ -67,7 +67,7 @@ class TodosPageSpec extends GebSpec {
 	}
 
 	@ModifiesDatastore
-	void 'user sees todos if they have some'() {
+	void 'users see their todos'() {
 		given:
 		loginTo 'user@ggx.org', false, TodosPage
 		setupTodos()
@@ -78,5 +78,34 @@ class TodosPageSpec extends GebSpec {
 		then:
 		!addTodosPromo
 		todos*.text == ['first', 'second']
+	}
+
+	@ModifiesDatastore
+	void 'users can remove their todos'() {
+		given:
+		loginTo 'user@ggx.org', false, TodosPage
+		setupTodos()
+		to TodosPage
+
+		when:
+		todos(0).delete.click()
+
+		then:
+		todos*.text == ['second']
+	}
+
+	@ModifiesDatastore
+	void 'can add a todo'() {
+		given:
+		loginTo 'user@ggx.org', false, TodosPage
+		setupTodos()
+		to TodosPage
+
+		when:
+		newTodo = 'new todo'
+		newTodoSubmit.click()
+
+		then:
+		todos*.text == ['first', 'second', 'new todo']
 	}
 }

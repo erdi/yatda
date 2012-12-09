@@ -16,4 +16,22 @@ class RouteSpec extends GaelykRoutingSpec {
 			destination == '/ggx/yatda/main.groovy'
 		}
 	}
+
+	void 'todo removal'() {
+		expect:
+		with post('/todo/remove/2'), {
+			matches
+			redirectionType == FORWARD
+			destination == '/ggx/yatda/todo/remove.groovy?id=2'
+		}
+	}
+
+	void 'adding a todo'() {
+		expect:
+		with post('/todo/add'), {
+			matches
+			redirectionType == FORWARD
+			destination == '/ggx/yatda/todo/add.groovy'
+		}
+	}
 }

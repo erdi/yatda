@@ -1,0 +1,56 @@
+apply plugin: 'gaelyk'
+apply plugin: 'idea'
+apply from: 'gradle/idea.gradle'
+
+
+buildscript {
+	ext {
+		gaelykPluginVersion = '0.4.1'
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath "org.gradle.api.plugins:gradle-gaelyk-plugin:$gaelykPluginVersion"
+	}
+}
+
+sourceCompatibility = 1.5
+	
+ext {
+	groovyVersion = '1.8.7'
+	gaeVersion = '1.7.3'
+	gaelykVersion = '1.1'
+	gaelykSpockVersion = '0.3.1'
+	seleniumVersion = '2.28.0'
+	gaelykFunctionalTestVersion = '0.2'
+	gaelykRemoteVersion = '0.1'
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+	}
+}
+
+dependencies {
+	groovy "org.codehaus.groovy:groovy-all:$groovyVersion", { force = true }
+
+	compile "org.gaelyk:gaelyk:$gaelykVersion",
+		"org.gaelyk:gaelyk-functional-test-datastore-builder:$gaelykFunctionalTestVersion"
+
+	runtime "org.gaelyk:gaelyk-remote:$gaelykRemoteVersion"
+
+	gaeSdk "com.google.appengine:appengine-java-sdk:$gaeVersion"
+	compile "com.google.appengine:appengine-api-1.0-sdk:$gaeVersion"
+	compile "com.google.appengine:appengine-api-labs:$gaeVersion"
+
+	testCompile "org.gaelyk:gaelyk-spock:$gaelykSpockVersion", {
+		exclude group: 'org.codehaus.groovy', module: 'groovy'
+	}
+	functionalTestCompile "org.gaelyk:gaelyk-functional-test:$gaelykFunctionalTestVersion",
+		"org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+}

@@ -1,0 +1,7 @@
+*.iml
+*.ipr
+*.iws
+.gradle
+src/main/webapp/WEB-INF/lib
+out
+build

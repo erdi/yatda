@@ -1,0 +1,72 @@
+body {
+	padding-top: 60px;
+}
+
+.container {
+	text-align: center;
+}
+
+.container.page-contents h1 {
+	font-size: 72px;
+	line-height: 1;
+}
+
+.lead {
+	font-size: 21px;
+	font-weight: 200;
+	line-height: 30px;
+	margin-bottom: 20px;
+}
+
+.navbar span {
+	padding: 10px 20px;
+	font-size: 15px;
+	display: inline-block;
+}
+
+.container.page-contents > form, .nav-stacked {
+	padding-top: 15px;
+	margin: 0 120px 20px 110px;
+}
+
+.nav-tabs.nav-stacked li {
+	border: 1px solid #999999;
+	line-height: 20px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+.nav-tabs.nav-stacked li:first-child {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.nav-tabs.nav-stacked li:last-child {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.nav-tabs.nav-stacked li:first-child button {
+	border-top-right-radius: 4px;
+}
+
+.nav-tabs.nav-stacked li:last-child button {
+	border-bottom-right-radius: 4px;
+}
+
+.todo {
+	margin-right: -40px;
+	text-align: left;
+	padding-left: 6px;
+}
+
+.todo button {
+	margin: -8px 0;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	border-radius: 0;
+}
+
+.todo form {
+	margin: 0px;
+}
